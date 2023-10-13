@@ -1,0 +1,181 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73970d4a726b1804c88c86fd3ee9d5ce, type: 3}
+  m_Name: Auti 1
+  m_EditorClassIdentifier: 
+  carName: Trueno
+  maxModelAngle: 60
+  rotationChangeSpeed: 400
+  maxSpeed: 200
+  acceleration: 150
+  brakeStrength: 60
+  tireGrip: 10
+  gripStrength: 50
+  airResistance: 0.5
+  leftStickWeight: 0.8
+  rightStickWeight: 0.5
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1.9341164
+      value: 0.0065841675
+      inSlope: 0.39050695
+      outSlope: 0.13551591
+      tangentMode: 1
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.36646596
+    - serializedVersion: 3
+      time: 3.8190541
+      value: 1.0034685
+      inSlope: 0.4934965
+      outSlope: -0.18238296
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.17575867
+      outWeight: 0.29612797
+    - serializedVersion: 3
+      time: 7.9707193
+      value: 0.43310276
+      inSlope: -0.05718018
+      outSlope: -0.0032863235
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.4703299
+      outWeight: 0.8187241
+    - serializedVersion: 3
+      time: 10
+      value: 0.41238198
+      inSlope: -0.002863259
+      outSlope: -0.07442148
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.91659516
+      outWeight: 0.6472236
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  steeringCurveFront:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.04587555
+      value: 0.99349976
+      inSlope: -0.020026514
+      outSlope: -0.020026514
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.6483625
+    - serializedVersion: 3
+      time: 1.0061345
+      value: 0.025831342
+      inSlope: -0.94079554
+      outSlope: -0.94079554
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1314489
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  steeringCurveRear:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.008323669
+      value: 0.013977051
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.81329346
+      value: 0.9726753
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gripCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.05838394
+      value: 0.80887985
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.36196175
+      value: 0.68394166
+      inSlope: 0.5164414
+      outSlope: 0.5164414
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.395568
+      outWeight: 0.15166609
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  driftCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.008338928
+      value: 0.011779785
+      inSlope: 2.6921067
+      outSlope: 2.6921067
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.17788637
+    - serializedVersion: 3
+      time: 0.5430429
+      value: 0.69822675
+      inSlope: 0.4609479
+      outSlope: 0.4609479
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.32712552
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
