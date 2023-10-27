@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class NewController : MonoBehaviour
 {
     public CarTuning carTuning;
+    public DriftCheck driftCheck;
     public Vector3 velocity;
     public Transform carModel;
     public GameObject tireMarks;
@@ -15,6 +16,7 @@ public class NewController : MonoBehaviour
     private float brakeInput;
     private float frontSteerInput;
     private float rearSteerInput;
+    private float backingUpInput;
 
     public bool isDrifting = false;
 
@@ -34,16 +36,22 @@ public class NewController : MonoBehaviour
         inputActions.CarControlls.frontSteering.canceled += ctx => frontSteerInput = 0;
         inputActions.CarControlls.rearSteering.performed += ctx => rearSteerInput = ctx.ReadValue<float>();
         inputActions.CarControlls.rearSteering.canceled += ctx => rearSteerInput = 0;
+        inputActions.CarControlls.backingUp.performed += ctx => backingUpInput = ctx.ReadValue<float>();
+        inputActions.CarControlls.backingUp.canceled += ctx => backingUpInput = 0;
     }
 
     void Update()
     {
-        Debug.Log("Brakeing for: " + brakeInput);
+        //Debug.Log("Brakeing for: " + brakeInput);
         if (brakeInput > 0)
         {
             Brake(brakeInput);
         }
-        else { Accelerate(accelerationInput); }
+        else if (accelerationInput > 0)
+        {
+            Accelerate(accelerationInput);
+        }
+        else { AccelerateBack(backingUpInput); }
 
         var steeringAmount = 0f;
 
@@ -69,6 +77,11 @@ public class NewController : MonoBehaviour
     {
         var smoothedAcceleration = carTuning.accelerationCurve.Evaluate(velocity.magnitude / carTuning.maxSpeed) * amount;
         velocity.z += smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
+    }
+    void AccelerateBack(float amount)
+    {
+        var smoothedAcceleration = carTuning.accelerationCurve.Evaluate(velocity.magnitude / carTuning.maxSpeed) * amount;
+        velocity.z -= smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
     }
 
     void AirResistance()
@@ -128,5 +141,9 @@ public class NewController : MonoBehaviour
     void Turn(float steeringAmount)
     {
         transform.Rotate(0f, steeringAmount, 0f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
     }
 }

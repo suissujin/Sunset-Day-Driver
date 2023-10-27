@@ -8,24 +8,25 @@ public class DriftCheck : MonoBehaviour
     public NewController newController;
     public Collider carBody;
     public int driftScore;
-    public int graceScore;
+    public int grazeScore;
     public int totalScore;
-    public bool isGraceing = false;
+    public bool isGrazing = false;
+    public bool crashed = false;
 
     private void Update()
     {
         if (newController.velocity != Vector3.zero)
         {
-            if (isGraceing == true)
+            if (isGrazing == true && crashed == false)
             {
-                graceScore++;
+                grazeScore++;
             }
             else
             {
-                totalScore += graceScore;
-                graceScore = 0;
+                totalScore += grazeScore;
+                grazeScore = 0;
             }
-            if (newController.isDrifting == true)
+            if (newController.isDrifting == true && crashed == false)
             {
                 driftScore++;
             }
@@ -41,8 +42,13 @@ public class DriftCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Lastwage"))
         {
-            isGraceing = true;
+            isGrazing = true;
             //Debug.Log("Bim Lastwage");
+        }
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("Crashing Lastwage");
+            crashed = true;
         }
     }
 
@@ -50,19 +56,29 @@ public class DriftCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Lastwage"))
         {
-            isGraceing = false;
+            isGrazing = false;
             //Debug.Log("Weg vom Lastwage");
         }
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            crashed = false;
+        }
     }
-    private void OnCollision(Collision other)
+
+    private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Crashing");
         if (other.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("Crashing Lastwage");
-            newController.velocity.z = 0;
-            graceScore = 0;
-            driftScore = 0;
+            crashed = true;
+            newController.velocity = Vector3.zero;
+        }
+    }
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.CompareTag("Obstacle"))
+        {
+            crashed = false;
         }
     }
 }

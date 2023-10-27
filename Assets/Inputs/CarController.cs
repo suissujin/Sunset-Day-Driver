@@ -62,6 +62,15 @@ public partial class @CarController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""backingUp"",
+                    ""type"": ""Value"",
+                    ""id"": ""8c2c7ce4-bec5-4906-844f-2bf66db49da0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -218,6 +227,28 @@ public partial class @CarController: IInputActionCollection2, IDisposable
                     ""action"": ""brake"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ea6a3b1-4d2b-4675-81fe-19baa4be170b"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""backingUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5d5f668-30f9-46cd-988c-7ec154661029"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""backingUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -230,6 +261,7 @@ public partial class @CarController: IInputActionCollection2, IDisposable
         m_CarControlls_frontSteering = m_CarControlls.FindAction("frontSteering", throwIfNotFound: true);
         m_CarControlls_rearSteering = m_CarControlls.FindAction("rearSteering", throwIfNotFound: true);
         m_CarControlls_brake = m_CarControlls.FindAction("brake", throwIfNotFound: true);
+        m_CarControlls_backingUp = m_CarControlls.FindAction("backingUp", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -295,6 +327,7 @@ public partial class @CarController: IInputActionCollection2, IDisposable
     private readonly InputAction m_CarControlls_frontSteering;
     private readonly InputAction m_CarControlls_rearSteering;
     private readonly InputAction m_CarControlls_brake;
+    private readonly InputAction m_CarControlls_backingUp;
     public struct CarControllsActions
     {
         private @CarController m_Wrapper;
@@ -303,6 +336,7 @@ public partial class @CarController: IInputActionCollection2, IDisposable
         public InputAction @frontSteering => m_Wrapper.m_CarControlls_frontSteering;
         public InputAction @rearSteering => m_Wrapper.m_CarControlls_rearSteering;
         public InputAction @brake => m_Wrapper.m_CarControlls_brake;
+        public InputAction @backingUp => m_Wrapper.m_CarControlls_backingUp;
         public InputActionMap Get() { return m_Wrapper.m_CarControlls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -324,6 +358,9 @@ public partial class @CarController: IInputActionCollection2, IDisposable
             @brake.started += instance.OnBrake;
             @brake.performed += instance.OnBrake;
             @brake.canceled += instance.OnBrake;
+            @backingUp.started += instance.OnBackingUp;
+            @backingUp.performed += instance.OnBackingUp;
+            @backingUp.canceled += instance.OnBackingUp;
         }
 
         private void UnregisterCallbacks(ICarControllsActions instance)
@@ -340,6 +377,9 @@ public partial class @CarController: IInputActionCollection2, IDisposable
             @brake.started -= instance.OnBrake;
             @brake.performed -= instance.OnBrake;
             @brake.canceled -= instance.OnBrake;
+            @backingUp.started -= instance.OnBackingUp;
+            @backingUp.performed -= instance.OnBackingUp;
+            @backingUp.canceled -= instance.OnBackingUp;
         }
 
         public void RemoveCallbacks(ICarControllsActions instance)
@@ -363,5 +403,6 @@ public partial class @CarController: IInputActionCollection2, IDisposable
         void OnFrontSteering(InputAction.CallbackContext context);
         void OnRearSteering(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
+        void OnBackingUp(InputAction.CallbackContext context);
     }
 }

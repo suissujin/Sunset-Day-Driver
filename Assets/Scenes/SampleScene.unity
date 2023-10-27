@@ -1089,7 +1089,7 @@ GameObject:
   - component: {fileID: 288521397}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Obstacle
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1107,6 +1107,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2045323234}
+  - {fileID: 1188513136}
   m_Father: {fileID: 1596079843}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2959,6 +2960,7 @@ GameObject:
   - component: {fileID: 756452962}
   - component: {fileID: 756452961}
   - component: {fileID: 756452963}
+  - component: {fileID: 756452964}
   m_Layer: 0
   m_Name: New Car
   m_TagString: Untagged
@@ -2979,6 +2981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carTuning: {fileID: 11400000, guid: 04a3eb6b0efad634eab1baf0f59759a1, type: 2}
+  driftCheck: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   carModel: {fileID: 1219776869}
   tireMarks: {fileID: 1263919755}
@@ -3019,6 +3022,25 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.3, z: 0}
+--- !u!114 &756452964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756452960}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bad1be41b68cfb45b137fc5edeaaf79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newController: {fileID: 756452961}
+  carBody: {fileID: 1219776871}
+  driftScore: 0
+  grazeScore: 0
+  totalScore: 0
+  isGrazing: 0
+  crashed: 0
 --- !u!1001 &792189018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4641,6 +4663,51 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 2
   m_Enabled: 1
+--- !u!1 &1188513135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1188513136}
+  - component: {fileID: 1188513137}
+  m_Layer: 0
+  m_Name: CollisionTrigger
+  m_TagString: Obstacle
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1188513136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188513135}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 288521396}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1188513137
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188513135}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0488417, y: 1, z: 1.0021734}
+  m_Center: {x: -0.0071698427, y: 0, z: 0.008567333}
 --- !u!1 &1210563376
 GameObject:
   m_ObjectHideFlags: 0
@@ -4791,7 +4858,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &1219776871
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4803,8 +4870,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8657687, y: 0.9296506, z: 0.9729409}
-  m_Center: {x: 0.008559957, y: 0.23109058, z: 0.14454687}
+  m_Size: {x: 0.9655583, y: 0.87073004, z: 1.044524}
+  m_Center: {x: 0.0033706427, y: 0.26055086, z: -0.08461797}
 --- !u!23 &1219776872
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4870,9 +4937,10 @@ MonoBehaviour:
   newController: {fileID: 756452961}
   carBody: {fileID: 1219776871}
   driftScore: 0
-  graceScore: 0
+  grazeScore: 0
   totalScore: 0
-  isGraceing: 0
+  isGrazing: 0
+  crashed: 0
 --- !u!1 &1230429689
 GameObject:
   m_ObjectHideFlags: 0
@@ -4885,7 +4953,7 @@ GameObject:
   - component: {fileID: 1230429692}
   - component: {fileID: 1230429691}
   m_Layer: 5
-  m_Name: GraceScore
+  m_Name: GrazeScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6066,7 +6134,7 @@ GameObject:
   - component: {fileID: 1596079843}
   m_Layer: 0
   m_Name: Lastwage
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6571,7 +6639,7 @@ MonoBehaviour:
   StyleScoreText: {fileID: 697446926}
   Speedometer: {fileID: 2099723458}
   driftScoreText: {fileID: 1090607253}
-  graceScoreText: {fileID: 1230429691}
+  grazeScoreText: {fileID: 1230429691}
 --- !u!4 &1779669709
 Transform:
   m_ObjectHideFlags: 0
@@ -7572,7 +7640,7 @@ GameObject:
   - component: {fileID: 2045323234}
   - component: {fileID: 2045323235}
   m_Layer: 0
-  m_Name: trigger
+  m_Name: GrazeTrigger
   m_TagString: Lastwage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,7 +12,7 @@ public class DriftScoreCounter : MonoBehaviour
     public TextMeshProUGUI StyleScoreText;
     public TextMeshProUGUI Speedometer;
     public TextMeshProUGUI driftScoreText;
-    public TextMeshProUGUI graceScoreText;
+    public TextMeshProUGUI grazeScoreText;
 
     private void Update()
     {
@@ -28,14 +28,14 @@ public class DriftScoreCounter : MonoBehaviour
         {
             driftScoreText.gameObject.SetActive(false);
         }
-        if (driftCheck.graceScore > 0)
+        if (driftCheck.grazeScore > 0)
         {
-            graceScoreText.gameObject.SetActive(true);
-            graceScoreText.text = "Graceing for: " + driftCheck.graceScore.ToString();
+            grazeScoreText.gameObject.SetActive(true);
+            grazeScoreText.text = "Graceing for: " + driftCheck.grazeScore.ToString();
         }
         else
         {
-            graceScoreText.gameObject.SetActive(false);
+            grazeScoreText.gameObject.SetActive(false);
         }
 
     }
