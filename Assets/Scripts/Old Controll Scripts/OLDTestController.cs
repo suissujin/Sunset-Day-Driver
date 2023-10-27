@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestController : MonoBehaviour
+public class OLDTestController : MonoBehaviour
 {
     public Rigidbody frontRB;
     public Rigidbody rearRB;

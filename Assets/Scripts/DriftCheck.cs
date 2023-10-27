@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class DriftCheck : MonoBehaviour
 {
-    public NewController newController;
+    public PlayerCarController playerCarController;
     public Collider carBody;
     public int driftScore;
     public int grazeScore;
@@ -15,7 +15,7 @@ public class DriftCheck : MonoBehaviour
 
     private void Update()
     {
-        if (newController.velocity != Vector3.zero)
+        if (playerCarController.velocity != Vector3.zero)
         {
             if (isGrazing == true && crashed == false)
             {
@@ -26,7 +26,7 @@ public class DriftCheck : MonoBehaviour
                 totalScore += grazeScore;
                 grazeScore = 0;
             }
-            if (newController.isDrifting == true && crashed == false)
+            if (playerCarController.isDrifting == true && crashed == false)
             {
                 driftScore++;
             }
@@ -59,23 +59,6 @@ public class DriftCheck : MonoBehaviour
             isGrazing = false;
             //Debug.Log("Weg vom Lastwage");
         }
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            crashed = false;
-        }
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            Debug.Log("Crashing Lastwage");
-            crashed = true;
-            newController.velocity = Vector3.zero;
-        }
-    }
-    private void OnCollisionExit(Collision other)
-    {
         if (other.gameObject.CompareTag("Obstacle"))
         {
             crashed = false;

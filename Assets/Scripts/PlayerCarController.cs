@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NewController : MonoBehaviour
+public class PlayerCarController : MonoBehaviour
 {
     public CarTuning carTuning;
     public DriftCheck driftCheck;
@@ -11,6 +12,11 @@ public class NewController : MonoBehaviour
     public Transform carModel;
     public GameObject tireMarks;
     public Collider carBody;
+
+    public BoxCollider carCollider;
+    public LayerMask collisionMask;
+    public AnimationCurve collisionCurve;
+    public float collisionDistance;
 
     private float accelerationInput;
     private float brakeInput;
@@ -61,6 +67,7 @@ public class NewController : MonoBehaviour
         Turn(steeringAmount);
 
         velocity = Vector3.ClampMagnitude(velocity, carTuning.maxSpeed);
+        CheckCollision();
         controller.Move(transform.TransformDirection(velocity) * Time.deltaTime);
 
         if (brakeInput > 0.6f || isDrifting)
@@ -82,6 +89,24 @@ public class NewController : MonoBehaviour
     {
         var smoothedAcceleration = carTuning.accelerationCurve.Evaluate(velocity.magnitude / carTuning.maxSpeed) * amount;
         velocity.z -= smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
+    }
+    void CheckCollision()
+    {
+        var worldVelocity = transform.TransformDirection(velocity);
+        if (Physics.BoxCast(carBody.transform.position, carCollider.size * 0.5f, worldVelocity.normalized, out var hit, carBody.transform.rotation, collisionDistance, collisionMask))
+        {
+            var dot = Math.Abs(Vector3.Dot(hit.normal, worldVelocity.normalized));
+            velocity *= collisionCurve.Evaluate(dot);
+            Debug.Log("Collision: " + hit.distance);
+            driftCheck.crashed = true;
+        }
+        else { driftCheck.crashed = false; }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(carBody.transform.position, carCollider.size);
     }
 
     void AirResistance()
@@ -119,7 +144,8 @@ public class NewController : MonoBehaviour
         //Debug.Log("FrontSteering: " + frontSteerInput * steeringCurveFront.Evaluate(velocity.magnitude / maxSpeed));    
     }
     //mache dass bim brämse grip 100% isch
-    //rotationAngle vo gripp abhänig mache maybe?
+    //^^^^^^^
+    //goht immer nonig!!!!
     void RearSteering(ref float steeringAmount)
     {
         var targetAngle = carTuning.maxModelAngle * rearSteerInput;

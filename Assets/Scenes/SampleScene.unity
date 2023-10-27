@@ -1087,7 +1087,7 @@ GameObject:
   - component: {fileID: 288521399}
   - component: {fileID: 288521398}
   - component: {fileID: 288521397}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2962,7 +2962,7 @@ GameObject:
   - component: {fileID: 756452963}
   - component: {fileID: 756452964}
   m_Layer: 0
-  m_Name: New Car
+  m_Name: PlayerCar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2981,11 +2981,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carTuning: {fileID: 11400000, guid: 04a3eb6b0efad634eab1baf0f59759a1, type: 2}
-  driftCheck: {fileID: 0}
+  driftCheck: {fileID: 1219776874}
   velocity: {x: 0, y: 0, z: 0}
   carModel: {fileID: 1219776869}
   tireMarks: {fileID: 1263919755}
   carBody: {fileID: 1219776871}
+  carCollider: {fileID: 1219776871}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  collisionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.009712417
+      value: 1.0001369
+      inSlope: -1.015052
+      outSlope: -1.015052
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.99515814
+      value: -0.0001417473
+      inSlope: -1.015052
+      outSlope: -1.015052
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  collisionDistance: 0.001
   isDrifting: 0
   controller: {fileID: 756452963}
 --- !u!4 &756452962
@@ -3034,7 +3063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bad1be41b68cfb45b137fc5edeaaf79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newController: {fileID: 756452961}
+  playerCarController: {fileID: 756452961}
   carBody: {fileID: 1219776871}
   driftScore: 0
   grazeScore: 0
@@ -4231,7 +4260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 2.19, z: -3.79}
-  newController: {fileID: 756452961}
+  playerCarController: {fileID: 756452961}
   angle: 11.51
   stiffness: 0.5
   followSpeed: 20
@@ -4673,7 +4702,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1188513136}
   - component: {fileID: 1188513137}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CollisionTrigger
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -4934,7 +4963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bad1be41b68cfb45b137fc5edeaaf79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newController: {fileID: 756452961}
+  playerCarController: {fileID: 756452961}
   carBody: {fileID: 1219776871}
   driftScore: 0
   grazeScore: 0
@@ -6132,7 +6161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1596079843}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Lastwage
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -6635,7 +6664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   driftCheck: {fileID: 1219776874}
-  newController: {fileID: 756452961}
+  playerCarController: {fileID: 756452961}
   StyleScoreText: {fileID: 697446926}
   Speedometer: {fileID: 2099723458}
   driftScoreText: {fileID: 1090607253}
@@ -6993,34 +7022,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frontRB: {fileID: 403413149}
-  rearRB: {fileID: 1526381014}
+  rearRB: {fileID: 0}
   accelerationInput: 0
   steeringInputFront: 0
   steeringInputRear: 0
-  brakeInput: 50000
-  motorPower: 10
+  brakeInput: 0
+  motorPower: 0
   brakePower: 0
   steeringCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 1.0225825
-      value: 48.40406
-      inSlope: 0.050931495
-      outSlope: 0.050931495
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.47565374
-    - serializedVersion: 3
-      time: 58.93048
-      value: 0.027885437
-      inSlope: -2.4537735
-      outSlope: -2.4537735
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.058619224
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -7639,7 +7650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2045323234}
   - component: {fileID: 2045323235}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GrazeTrigger
   m_TagString: Lastwage
   m_Icon: {fileID: 0}

@@ -4,7 +4,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Vector3 offset;
-    public NewController newController;
+    public PlayerCarController playerCarController;
     private List<Vector3> velocityList = new List<Vector3>();
     public float angle;
     [Range(0, 1)]
@@ -14,13 +14,13 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        transform.position = newController.transform.position + offset;
+        transform.position = playerCarController.transform.position + offset;
     }
     private void LateUpdate()
     {
-        //transform.position += newController.transform.TransformDirection(newController.velocity) * Time.deltaTime;
-        var targetRotation = Quaternion.Euler(0, newController.transform.eulerAngles.y, 0);
-        velocityList.Add(newController.transform.TransformDirection(newController.velocity) * (Time.deltaTime * (1f - stiffness)));
+        //transform.position += playerCarController.transform.TransformDirection(playerCarController.velocity) * Time.deltaTime;
+        var targetRotation = Quaternion.Euler(0, playerCarController.transform.eulerAngles.y, 0);
+        velocityList.Add(playerCarController.transform.TransformDirection(playerCarController.velocity) * (Time.deltaTime * (1f - stiffness)));
         if (velocityList.Count > velocityListLength)
         {
             velocityList.RemoveAt(0);
@@ -31,9 +31,9 @@ public class CameraController : MonoBehaviour
             velocity += vel;
         }
         velocity /= velocityList.Count;
-        var targetPosition = newController.transform.position + targetRotation * offset - velocity;
+        var targetPosition = playerCarController.transform.position + targetRotation * offset - velocity;
         //transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
         transform.position = targetPosition;
-        transform.LookAt(newController.transform.position + newController.transform.forward * 10f);
+        transform.LookAt(playerCarController.transform.position + playerCarController.transform.forward * 10f);
     }
 }

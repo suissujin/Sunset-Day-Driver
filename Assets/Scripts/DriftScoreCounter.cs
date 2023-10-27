@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 public class DriftScoreCounter : MonoBehaviour
 {
     public DriftCheck driftCheck;
-    public NewController newController;
+    public PlayerCarController playerCarController;
     public TextMeshProUGUI StyleScoreText;
     public TextMeshProUGUI Speedometer;
     public TextMeshProUGUI driftScoreText;
@@ -17,7 +17,7 @@ public class DriftScoreCounter : MonoBehaviour
     private void Update()
     {
         StyleScoreText.text = "Style Points: " + driftCheck.totalScore.ToString();
-        Speedometer.text = Mathf.Round(newController.velocity.z).ToString() + " km/h";
+        Speedometer.text = Mathf.Round(playerCarController.velocity.z).ToString() + " km/h";
 
         if (driftCheck.driftScore > 0)
         {
