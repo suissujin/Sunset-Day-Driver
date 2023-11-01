@@ -45,11 +45,6 @@ public class DriftCheck : MonoBehaviour
             isGrazing = true;
             //Debug.Log("Bim Lastwage");
         }
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            Debug.Log("Crashing Lastwage");
-            crashed = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -58,10 +53,6 @@ public class DriftCheck : MonoBehaviour
         {
             isGrazing = false;
             //Debug.Log("Weg vom Lastwage");
-        }
-        if (other.gameObject.CompareTag("Obstacle"))
-        {
-            crashed = false;
         }
     }
 }

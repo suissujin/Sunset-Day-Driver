@@ -3014,7 +3014,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  collisionDistance: 0.001
+  collisionDistance: 0.5
   isDrifting: 0
   controller: {fileID: 756452963}
 --- !u!4 &756452962

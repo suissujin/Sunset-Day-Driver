@@ -19,7 +19,7 @@ MonoBehaviour:
   acceleration: 150
   brakeStrength: 60
   tireGrip: 20
-  gripStrength: 0
+  gripStrength: 50
   airResistance: 0.5
   leftStickWeight: 0.8
   rightStickWeight: 0.4
@@ -96,26 +96,44 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.029037476
+      value: 1.2345886
+      inSlope: -0.36710882
+      outSlope: -0.36710882
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 1
     - serializedVersion: 3
-      time: 0.46293455
-      value: 1.9134552
-      inSlope: -0.5798157
-      outSlope: -0.5798157
+      time: 0.33090496
+      value: 1.18095
+      inSlope: 0.54679406
+      outSlope: 0.54679406
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.50515723
+      value: 1.2894976
+      inSlope: 0.038062613
+      outSlope: 0.038062613
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.4696077
+      outWeight: 0.29401398
+    - serializedVersion: 3
+      time: 0.63384825
+      value: 1.627517
+      inSlope: 0.86764497
+      outSlope: 0.86764497
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.38073432
       outWeight: 0.39406702
     - serializedVersion: 3
-      time: 0.9526367
-      value: 1.3082657
+      time: 0.967926
+      value: 1.4356613
       inSlope: -0.23639573
       outSlope: -0.23639573
       tangentMode: 0

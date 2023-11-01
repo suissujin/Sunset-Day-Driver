@@ -46,7 +46,7 @@ public class PlayerCarController : MonoBehaviour
         inputActions.CarControlls.backingUp.canceled += ctx => backingUpInput = 0;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //Debug.Log("Brakeing for: " + brakeInput);
         if (brakeInput > 0)
@@ -146,6 +146,8 @@ public class PlayerCarController : MonoBehaviour
     //mache dass bim brämse grip 100% isch
     //^^^^^^^
     //goht immer nonig!!!!
+    //vibration bim drivte
+    //fov bim schnell fahre witter mache
     void RearSteering(ref float steeringAmount)
     {
         var targetAngle = carTuning.maxModelAngle * rearSteerInput;
