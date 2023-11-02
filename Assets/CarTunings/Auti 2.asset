@@ -12,31 +12,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73970d4a726b1804c88c86fd3ee9d5ce, type: 3}
   m_Name: Auti 2
   m_EditorClassIdentifier: 
-  carName: Kacki Auti
-  maxModelAngle: 60
-  rotationChangeSpeed: 100
+  carName: Lastwagen
+  maxModelAngle: 30
+  rotationChangeSpeed: 50
   maxSpeed: 120
-  acceleration: 60
+  acceleration: 80
   brakeStrength: 80
+  tireGrip: 0
   gripStrength: 5
-  airResistance: 0.3
+  airResistance: 1
   leftStickWeight: 0.3
   rightStickWeight: 0.3
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      time: 0.00111912
+      value: 0.20664914
+      inSlope: 4.085581
+      outSlope: 4.085581
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.39189234
     - serializedVersion: 3
-      time: 1
-      value: 0.01
+      time: 0.11195198
+      value: 0.54270184
+      inSlope: 1.7126725
+      outSlope: 1.7126725
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.48575807
+      value: 0.8793848
+      inSlope: 0.86943
+      outSlope: 0.86943
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.4898628
+      outWeight: 0.33890554
+    - serializedVersion: 3
+      time: 0.9215246
+      value: 0.8175943
+      inSlope: -0.3040646
+      outSlope: -0.3040646
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5879045
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0040588
+      value: 0.020742187
       inSlope: -0.15490481
       outSlope: -0.15490481
       tangentMode: 0
@@ -52,15 +80,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.004169464
       value: 0.009429932
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.42086574
+      outSlope: 0.42086574
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.25855717
     - serializedVersion: 3
-      time: 1
-      value: 1
+      time: 0.9916992
+      value: 0.9844551
       inSlope: 2
       outSlope: 2
       tangentMode: 0
