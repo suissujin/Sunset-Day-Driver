@@ -31,7 +31,7 @@ public class DriftScoreCounter : MonoBehaviour
         if (driftCheck.grazeScore > 0)
         {
             grazeScoreText.gameObject.SetActive(true);
-            grazeScoreText.text = "Graceing for: " + driftCheck.grazeScore.ToString();
+            grazeScoreText.text = "Grazeing for: " + driftCheck.grazeScore.ToString();
         }
         else
         {
