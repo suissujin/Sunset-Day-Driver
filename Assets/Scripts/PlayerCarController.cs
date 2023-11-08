@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,13 +9,18 @@ public class PlayerCarController : MonoBehaviour
 {
     public CarTuning carTuning;
     public DriftCheck driftCheck;
+    public PauseMenuScript pauseMenu;
+    public WaypointList waypointList;
+
     public Vector3 velocity;
     public Transform carModel;
+    private Transform currentWaypoint;
     public GameObject tireMarks;
     public Collider carBody;
 
     public BoxCollider carCollider;
     public LayerMask collisionMask;
+    public LayerMask roadMask;
     public AnimationCurve collisionCurve;
     public float collisionDistance;
 
@@ -23,8 +29,12 @@ public class PlayerCarController : MonoBehaviour
     private float frontSteerInput;
     private float rearSteerInput;
     private float backingUpInput;
+    public int carType;
+    public int quitCounter = 0;
+
 
     public bool isDrifting = false;
+    public bool onRoad;
 
     private CarController inputActions;
     [SerializeField]
@@ -44,6 +54,75 @@ public class PlayerCarController : MonoBehaviour
         inputActions.CarControlls.rearSteering.canceled += ctx => rearSteerInput = 0;
         inputActions.CarControlls.backingUp.performed += ctx => backingUpInput = ctx.ReadValue<float>();
         inputActions.CarControlls.backingUp.canceled += ctx => backingUpInput = 0;
+        inputActions.CarControlls.SwitchCar1.performed += ctx => carType = 1;
+        inputActions.CarControlls.SwitchCar2.performed += ctx => carType = 2;
+        inputActions.CarControlls.SwitchCar3.performed += ctx => carType = 3;
+        inputActions.CarControlls.SwitchCar4.performed += ctx => carType = 4;
+        inputActions.CarControlls.Pause.performed += ctx => pauseMenu.Pause();
+        inputActions.CarControlls.ResetCar.performed += ctx => ResetCar();
+        inputActions.CarControlls.QuitGame.performed += ctx => quitCounter = 1;
+    }
+
+    private void Update()
+    {
+
+        var ChildHolder = gameObject.transform.GetChild(0).gameObject.transform;
+        {
+            if (pauseMenu.gamePaused == true)
+            {
+                if (quitCounter == 1)
+                {
+                    Application.Quit();
+                }
+                switch (carType)
+                {
+                    case 1:
+                        ChildHolder.GetChild(0).gameObject.SetActive(true);
+                        ChildHolder.GetChild(1).gameObject.SetActive(false);
+                        ChildHolder.GetChild(2).gameObject.SetActive(false);
+                        ChildHolder.GetChild(3).gameObject.SetActive(false);
+                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 1");
+                        Debug.Log(carTuning.carName);
+                        break;
+
+                    case 2:
+                        ChildHolder.GetChild(0).gameObject.SetActive(false);
+                        ChildHolder.GetChild(1).gameObject.SetActive(true);
+                        ChildHolder.GetChild(2).gameObject.SetActive(false);
+                        ChildHolder.GetChild(3).gameObject.SetActive(false);
+                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 2");
+                        Debug.Log(carTuning.carName);
+                        break;
+
+                    case 3:
+                        ChildHolder.GetChild(0).gameObject.SetActive(false);
+                        ChildHolder.GetChild(1).gameObject.SetActive(false);
+                        ChildHolder.GetChild(2).gameObject.SetActive(true);
+                        ChildHolder.GetChild(3).gameObject.SetActive(false);
+                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 3");
+                        Debug.Log(carTuning.carName);
+                        break;
+
+                    case 4:
+                        ChildHolder.GetChild(0).gameObject.SetActive(false);
+                        ChildHolder.GetChild(1).gameObject.SetActive(false);
+                        ChildHolder.GetChild(2).gameObject.SetActive(false);
+                        ChildHolder.GetChild(3).gameObject.SetActive(true);
+                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 4");
+                        Debug.Log(carTuning.carName);
+                        break;
+
+                    default:
+                        ChildHolder.GetChild(0).gameObject.SetActive(true);
+                        ChildHolder.GetChild(1).gameObject.SetActive(false);
+                        ChildHolder.GetChild(2).gameObject.SetActive(false);
+                        ChildHolder.GetChild(3).gameObject.SetActive(false);
+                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 1");
+                        Debug.Log(carTuning.carName);
+                        break;
+                }
+            }
+        }
     }
 
     void FixedUpdate()
@@ -72,6 +151,7 @@ public class PlayerCarController : MonoBehaviour
 
         if (brakeInput > 0.6f || isDrifting)
         {
+            //Gamepad.current.SetMotorSpeeds(0.123f, 0.234f);
             tireMarks.SetActive(true);
         }
         else
@@ -79,16 +159,45 @@ public class PlayerCarController : MonoBehaviour
             tireMarks.SetActive(false);
         }
 
+        if (transform.position.y != 1.69f)
+        {
+            transform.position = new Vector3(transform.position.x, 1.69f, transform.position.z);
+        }
+
+        CheckRoad();
+
     }
     void Accelerate(float amount)
     {
         var smoothedAcceleration = carTuning.accelerationCurve.Evaluate(velocity.magnitude / carTuning.maxSpeed) * amount;
-        velocity.z += smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
+        if (onRoad)
+        {
+            velocity.z += smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
+            if (isDrifting)
+            {
+                velocity.z += smoothedAcceleration * carTuning.acceleration * 0.8f * Time.deltaTime;
+            }
+        }
+        else
+        {
+            velocity.z += smoothedAcceleration * carTuning.maxSpeed * 0.25f * Time.deltaTime;
+        }
     }
     void AccelerateBack(float amount)
     {
         var smoothedAcceleration = carTuning.accelerationCurve.Evaluate(velocity.magnitude / carTuning.maxSpeed) * amount;
-        velocity.z -= smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
+        if (onRoad)
+        {
+            velocity.z -= smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
+            if (isDrifting)
+            {
+                velocity.z -= smoothedAcceleration * carTuning.acceleration * 0.8f * Time.deltaTime;
+            }
+        }
+        else
+        {
+            velocity.z -= smoothedAcceleration * carTuning.maxSpeed * 0.25f * Time.deltaTime;
+        }
     }
     void CheckCollision()
     {
@@ -99,8 +208,27 @@ public class PlayerCarController : MonoBehaviour
             velocity *= collisionCurve.Evaluate(dot);
             Debug.Log("Collision: " + hit.distance);
             driftCheck.crashed = true;
+            driftCheck.driftScore = 0;
+            driftCheck.grazeScore = 0;
         }
         else { driftCheck.crashed = false; }
+    }
+    void CheckRoad()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 1f, roadMask))
+        {
+            onRoad = true;
+            Debug.Log("On Road");
+        }
+        else
+        {
+            onRoad = false;
+            if (velocity.z > carTuning.maxSpeed * 0.1f)
+            {
+                velocity.z = carTuning.maxSpeed * 0.1f;
+            }
+            Debug.Log("Off Road");
+        }
     }
 
     private void OnDrawGizmos()
@@ -156,7 +284,7 @@ public class PlayerCarController : MonoBehaviour
         carModel.localRotation = Quaternion.RotateTowards(carModel.localRotation, targetRotation, carTuning.rotationChangeSpeed * Time.deltaTime * carTuning.driftCurve.Evaluate(driftAmount));
         steeringAmount = rearSteerInput * carTuning.steeringCurveRear.Evaluate(driftAmount) * carTuning.rightStickWeight;
         //Debug.Log("RearSteering: " + targetAngle);
-        if (Mathf.Abs(targetAngle) > driftAmount && Mathf.Abs(carModel.localRotation.y) > 0.4)
+        if (Mathf.Abs(targetAngle) > driftAmount && Mathf.Abs(carModel.localRotation.y) > 0.4 && onRoad)
         {
             isDrifting = true;
         }
@@ -171,7 +299,9 @@ public class PlayerCarController : MonoBehaviour
         transform.Rotate(0f, steeringAmount, 0f);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void ResetCar()
     {
+        currentWaypoint = waypointList.GetFirstAndClosestWaypoint(transform.position);
+        transform.position = currentWaypoint.position;
     }
 }

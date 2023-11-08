@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour
 {
     public Vector3 offset;
     public PlayerCarController playerCarController;
+    public PauseMenuScript pauseMenu;
     private List<Vector3> velocityList = new List<Vector3>();
     public float angle;
     [Range(0, 1)]
@@ -15,6 +16,29 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         transform.position = playerCarController.transform.position + offset;
+    }
+    private void Update()
+    {
+        if (pauseMenu.gamePaused == true)
+        {
+            switch (playerCarController.carType)
+            {
+                case 1:
+                    offset.y = 2.2f;
+                    break;
+                case 2:
+                    offset.y = 4.2f;
+                    break;
+                case 3:
+                    offset.y = 2.2f;
+                    break;
+                case 4:
+                    angle = 2.5f;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     private void LateUpdate()
     {

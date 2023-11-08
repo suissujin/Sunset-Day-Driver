@@ -71,6 +71,69 @@ public partial class @CarController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SwitchCar1"",
+                    ""type"": ""Button"",
+                    ""id"": ""f7c8c53f-599e-4a1d-87bd-465274e86f2e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchCar2"",
+                    ""type"": ""Button"",
+                    ""id"": ""58aa5b95-0add-4e7b-a997-54bc56f08f66"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchCar3"",
+                    ""type"": ""Button"",
+                    ""id"": ""81068ce5-a6f8-486c-97c4-df23325a6dbd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchCar4"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd8b92e0-9523-48bd-823b-64b32b4c0c38"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""47daef9c-5d75-467c-8fb1-94ed54f84461"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ResetCar"",
+                    ""type"": ""Button"",
+                    ""id"": ""76937db6-c95e-4829-9cd4-c5b8f01f1e37"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuitGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""82f3966f-cbee-46c6-89bc-c1c45789af26"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -249,6 +312,160 @@ public partial class @CarController: IInputActionCollection2, IDisposable
                     ""action"": ""backingUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07591de4-a582-4de8-b3b3-ecacc6a71715"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCar1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f928d993-ba4d-40d9-a961-cb00793e5baf"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCar1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a846e010-fd10-4fa0-adc6-cc457d8170d1"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCar2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6668053-ac0a-4bf6-b393-a40c9d8c067a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCar2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b1d8e10-aa68-42c6-ba53-31adb544cd3d"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCar3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3fc8abb-ae38-4bbe-9221-148f3cfbea75"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCar3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f75a305-8f7a-41c0-8f30-02db33d50b80"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCar4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aaae7bbb-2459-4159-93bc-b5dabf13ae9a"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCar4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""185f7537-950c-41d6-8d56-35b65256beab"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9845276-8647-4918-bfc0-bc79e365a811"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf282cd1-cd40-427b-8447-ba0af4ced407"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetCar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bdd58a9f-7ea2-4a3a-8cae-e00d2e19143b"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetCar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36a915ae-18d7-48f3-afb3-8daced258a3c"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuitGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfbff57d-a51a-4494-814e-d4ba443bce52"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuitGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -262,6 +479,13 @@ public partial class @CarController: IInputActionCollection2, IDisposable
         m_CarControlls_rearSteering = m_CarControlls.FindAction("rearSteering", throwIfNotFound: true);
         m_CarControlls_brake = m_CarControlls.FindAction("brake", throwIfNotFound: true);
         m_CarControlls_backingUp = m_CarControlls.FindAction("backingUp", throwIfNotFound: true);
+        m_CarControlls_SwitchCar1 = m_CarControlls.FindAction("SwitchCar1", throwIfNotFound: true);
+        m_CarControlls_SwitchCar2 = m_CarControlls.FindAction("SwitchCar2", throwIfNotFound: true);
+        m_CarControlls_SwitchCar3 = m_CarControlls.FindAction("SwitchCar3", throwIfNotFound: true);
+        m_CarControlls_SwitchCar4 = m_CarControlls.FindAction("SwitchCar4", throwIfNotFound: true);
+        m_CarControlls_Pause = m_CarControlls.FindAction("Pause", throwIfNotFound: true);
+        m_CarControlls_ResetCar = m_CarControlls.FindAction("ResetCar", throwIfNotFound: true);
+        m_CarControlls_QuitGame = m_CarControlls.FindAction("QuitGame", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -328,6 +552,13 @@ public partial class @CarController: IInputActionCollection2, IDisposable
     private readonly InputAction m_CarControlls_rearSteering;
     private readonly InputAction m_CarControlls_brake;
     private readonly InputAction m_CarControlls_backingUp;
+    private readonly InputAction m_CarControlls_SwitchCar1;
+    private readonly InputAction m_CarControlls_SwitchCar2;
+    private readonly InputAction m_CarControlls_SwitchCar3;
+    private readonly InputAction m_CarControlls_SwitchCar4;
+    private readonly InputAction m_CarControlls_Pause;
+    private readonly InputAction m_CarControlls_ResetCar;
+    private readonly InputAction m_CarControlls_QuitGame;
     public struct CarControllsActions
     {
         private @CarController m_Wrapper;
@@ -337,6 +568,13 @@ public partial class @CarController: IInputActionCollection2, IDisposable
         public InputAction @rearSteering => m_Wrapper.m_CarControlls_rearSteering;
         public InputAction @brake => m_Wrapper.m_CarControlls_brake;
         public InputAction @backingUp => m_Wrapper.m_CarControlls_backingUp;
+        public InputAction @SwitchCar1 => m_Wrapper.m_CarControlls_SwitchCar1;
+        public InputAction @SwitchCar2 => m_Wrapper.m_CarControlls_SwitchCar2;
+        public InputAction @SwitchCar3 => m_Wrapper.m_CarControlls_SwitchCar3;
+        public InputAction @SwitchCar4 => m_Wrapper.m_CarControlls_SwitchCar4;
+        public InputAction @Pause => m_Wrapper.m_CarControlls_Pause;
+        public InputAction @ResetCar => m_Wrapper.m_CarControlls_ResetCar;
+        public InputAction @QuitGame => m_Wrapper.m_CarControlls_QuitGame;
         public InputActionMap Get() { return m_Wrapper.m_CarControlls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -361,6 +599,27 @@ public partial class @CarController: IInputActionCollection2, IDisposable
             @backingUp.started += instance.OnBackingUp;
             @backingUp.performed += instance.OnBackingUp;
             @backingUp.canceled += instance.OnBackingUp;
+            @SwitchCar1.started += instance.OnSwitchCar1;
+            @SwitchCar1.performed += instance.OnSwitchCar1;
+            @SwitchCar1.canceled += instance.OnSwitchCar1;
+            @SwitchCar2.started += instance.OnSwitchCar2;
+            @SwitchCar2.performed += instance.OnSwitchCar2;
+            @SwitchCar2.canceled += instance.OnSwitchCar2;
+            @SwitchCar3.started += instance.OnSwitchCar3;
+            @SwitchCar3.performed += instance.OnSwitchCar3;
+            @SwitchCar3.canceled += instance.OnSwitchCar3;
+            @SwitchCar4.started += instance.OnSwitchCar4;
+            @SwitchCar4.performed += instance.OnSwitchCar4;
+            @SwitchCar4.canceled += instance.OnSwitchCar4;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            @ResetCar.started += instance.OnResetCar;
+            @ResetCar.performed += instance.OnResetCar;
+            @ResetCar.canceled += instance.OnResetCar;
+            @QuitGame.started += instance.OnQuitGame;
+            @QuitGame.performed += instance.OnQuitGame;
+            @QuitGame.canceled += instance.OnQuitGame;
         }
 
         private void UnregisterCallbacks(ICarControllsActions instance)
@@ -380,6 +639,27 @@ public partial class @CarController: IInputActionCollection2, IDisposable
             @backingUp.started -= instance.OnBackingUp;
             @backingUp.performed -= instance.OnBackingUp;
             @backingUp.canceled -= instance.OnBackingUp;
+            @SwitchCar1.started -= instance.OnSwitchCar1;
+            @SwitchCar1.performed -= instance.OnSwitchCar1;
+            @SwitchCar1.canceled -= instance.OnSwitchCar1;
+            @SwitchCar2.started -= instance.OnSwitchCar2;
+            @SwitchCar2.performed -= instance.OnSwitchCar2;
+            @SwitchCar2.canceled -= instance.OnSwitchCar2;
+            @SwitchCar3.started -= instance.OnSwitchCar3;
+            @SwitchCar3.performed -= instance.OnSwitchCar3;
+            @SwitchCar3.canceled -= instance.OnSwitchCar3;
+            @SwitchCar4.started -= instance.OnSwitchCar4;
+            @SwitchCar4.performed -= instance.OnSwitchCar4;
+            @SwitchCar4.canceled -= instance.OnSwitchCar4;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            @ResetCar.started -= instance.OnResetCar;
+            @ResetCar.performed -= instance.OnResetCar;
+            @ResetCar.canceled -= instance.OnResetCar;
+            @QuitGame.started -= instance.OnQuitGame;
+            @QuitGame.performed -= instance.OnQuitGame;
+            @QuitGame.canceled -= instance.OnQuitGame;
         }
 
         public void RemoveCallbacks(ICarControllsActions instance)
@@ -404,5 +684,12 @@ public partial class @CarController: IInputActionCollection2, IDisposable
         void OnRearSteering(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
         void OnBackingUp(InputAction.CallbackContext context);
+        void OnSwitchCar1(InputAction.CallbackContext context);
+        void OnSwitchCar2(InputAction.CallbackContext context);
+        void OnSwitchCar3(InputAction.CallbackContext context);
+        void OnSwitchCar4(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnResetCar(InputAction.CallbackContext context);
+        void OnQuitGame(InputAction.CallbackContext context);
     }
 }

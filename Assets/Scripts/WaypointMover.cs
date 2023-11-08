@@ -12,23 +12,29 @@ public class WaypointMover : MonoBehaviour
     private Transform currentWaypoint;
     private Quaternion targetRotation;
     private Vector3 directionToWaypoint;
+    private Vector3 startPosition;
+    private bool isMoving = false;
 
     private void Start()
     {
-        currentWaypoint = waypointList.GetNextWaypoint(currentWaypoint);
+        currentWaypoint = waypointList.GetFirstAndClosestWaypoint(transform.position);
         transform.position = currentWaypoint.position;
-
+        startPosition = transform.position;
         currentWaypoint = waypointList.GetNextWaypoint(currentWaypoint);
     }
 
     private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, moveSpeed * Time.deltaTime);
-        if (Vector3.Distance(transform.position, currentWaypoint.position) < distanceThreshold)
+        if (isMoving)
         {
-            currentWaypoint = waypointList.GetNextWaypoint(currentWaypoint);
+
+            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, moveSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, currentWaypoint.position) < distanceThreshold)
+            {
+                currentWaypoint = waypointList.GetNextWaypoint(currentWaypoint);
+            }
+            RotateTowardsWaypoint();
         }
-        RotateTowardsWaypoint();
     }
 
     private void RotateTowardsWaypoint()
@@ -37,5 +43,21 @@ public class WaypointMover : MonoBehaviour
         targetRotation = Quaternion.LookRotation(directionToWaypoint);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            isMoving = true;
+            //Debug.Log("Player Entered");
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            isMoving = false;
+            transform.position = startPosition;
+            //Debug.Log("Player Exited");
+        }
+    }
 }

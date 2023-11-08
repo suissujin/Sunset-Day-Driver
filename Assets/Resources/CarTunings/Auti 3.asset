@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73970d4a726b1804c88c86fd3ee9d5ce, type: 3}
   m_Name: Auti 3
   m_EditorClassIdentifier: 
-  carName: Ford 500
+  carName: Fiat 500
   maxModelAngle: 60
   rotationChangeSpeed: 100
   maxSpeed: 80
@@ -36,8 +36,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.37232286
     - serializedVersion: 3
-      time: 0.33274123
-      value: 0.50110376
+      time: 0.24099776
+      value: 0.5677999
       inSlope: 1.3736823
       outSlope: 1.3736823
       tangentMode: 0
@@ -54,8 +54,8 @@ MonoBehaviour:
       inWeight: 0.20698279
       outWeight: 0.33890554
     - serializedVersion: 3
-      time: 0.924439
-      value: 0.83839965
+      time: 0.95364434
+      value: 0.83447814
       inSlope: -0.3040646
       outSlope: -0.3040646
       tangentMode: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WaypointList : MonoBehaviour
@@ -27,14 +28,44 @@ public class WaypointList : MonoBehaviour
         {
             return transform.GetChild(0);
         }
-        if (currentWaypoint.GetSiblingIndex() < transform.childCount - 1)
+        if (currentWaypoint.GetSiblingIndex() > 0)
         {
-            return transform.GetChild(currentWaypoint.GetSiblingIndex() + 1);
+            return transform.GetChild(currentWaypoint.GetSiblingIndex() - 1);
         }
         else
         {
-            return transform.GetChild(0);
+            return transform.GetChild(transform.childCount - 1);
         }
+
+    }
+
+    /// <summary>
+    /// Returns the first waypoint in the list and the closest to the given position.
+    /// </summary>
+    /// <param name="fromPosition"></param>
+    /// <returns>The closest waypoint to the given position.</returns>
+    public Transform GetFirstAndClosestWaypoint(Vector3 fromPosition)
+    {
+
+        Transform closestWaypoint = null;
+
+        foreach (Transform waypoint in transform)
+        {
+
+            if (closestWaypoint == null)
+            {
+                closestWaypoint = waypoint;
+                continue;
+            }
+
+            if (Vector3.Distance(fromPosition, waypoint.position) < Vector3.Distance(fromPosition, closestWaypoint.position))
+            {
+                closestWaypoint = waypoint;
+            }
+
+        }
+
+        return closestWaypoint;
 
     }
 
