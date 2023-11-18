@@ -23,6 +23,7 @@ public class DriftScoreCounter : MonoBehaviour
     public TextMeshProUGUI grazeScoreText;
     public TextMeshProUGUI lapTimeText;
     public TextMeshProUGUI bestLapTimeText;
+    public TextMeshProUGUI highScoreText;
     private void Awake()
     {
         gamePlayUI.SetActive(true);
@@ -36,6 +37,7 @@ public class DriftScoreCounter : MonoBehaviour
             gamePlayUI.SetActive(true);
             pauseMenuUI.SetActive(false);
             StyleScoreText.text = string.Format("<mspace=1em>{0}</mspace>", driftCheck.totalScore.ToString());
+            highScoreText.text = string.Format("<mspace=1em>{0}</mspace>", lapCounter.highScore.ToString());
             Speedometer.text = Mathf.Round(playerCarController.velocity.z).ToString() + " km/h";
             lapTimeText.text = FormatTime(lapCounter.lapTime);
             bestLapTimeText.text = FormatTime(lapCounter.bestLapTime);

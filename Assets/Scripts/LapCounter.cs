@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LapCounter : MonoBehaviour
 {
+    public DriftCheck driftCheck;
+
     public bool crossedLC1 = false;
     public bool crossedLC2 = false;
     public bool crossedLL = false;
@@ -11,6 +13,7 @@ public class LapCounter : MonoBehaviour
 
     public float lapTime = 0;
     public float bestLapTime = 0;
+    public float highScore = 0;
 
     private void FixedUpdate()
     {
@@ -43,15 +46,18 @@ public class LapCounter : MonoBehaviour
         {
             bestLapTime = lapTime;
         }
-        else if (lapCounted == true && lapTime < bestLapTime)
+        else if (lapCounted == true && lapTime < bestLapTime && driftCheck.totalScore > highScore)
         {
             bestLapTime = lapTime;
+            highScore = driftCheck.totalScore;
             lapTime = 0;
+            driftCheck.totalScore = 0;
             lapCounted = false;
         }
-        else if (lapCounted == true && lapTime > bestLapTime)
+        else if (lapCounted == true && lapTime > bestLapTime && driftCheck.totalScore < highScore)
         {
             lapTime = 0;
+            driftCheck.totalScore = 0;
             lapCounted = false;
         }
     }

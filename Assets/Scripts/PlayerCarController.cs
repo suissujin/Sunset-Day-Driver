@@ -211,16 +211,15 @@ public class PlayerCarController : MonoBehaviour
     void CheckCollision()
     {
         var worldVelocity = transform.TransformDirection(velocity);
-        if (Physics.BoxCast(carBody.transform.position, carCollider.size * 0.5f, worldVelocity.normalized, out var hit, carBody.transform.rotation, collisionDistance, collisionMask))
+        if (Physics.BoxCast(carBody.transform.position, carCollider.size * 0.5f, worldVelocity.normalized, out var hit, carModel.localRotation, collisionDistance, collisionMask))
         {
             var dot = Math.Abs(Vector3.Dot(hit.normal, worldVelocity.normalized));
             velocity *= collisionCurve.Evaluate(dot);
             Debug.Log("Collision: " + hit.distance);
             driftCheck.crashed = true;
-            driftCheck.driftScore = 0;
-            driftCheck.grazeScore = 0;
+
         }
-        else { driftCheck.crashed = false; }
+        // else { driftCheck.crashed = false; }
     }
     void CheckRoad()
     {

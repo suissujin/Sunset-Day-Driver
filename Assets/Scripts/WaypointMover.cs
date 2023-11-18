@@ -25,15 +25,11 @@ public class WaypointMover : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isMoving)
+        RotateTowardsWaypoint();
+        transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, moveSpeed * Time.deltaTime);
+        if (Vector3.Distance(transform.position, currentWaypoint.position) < distanceThreshold)
         {
-
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint.position, moveSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, currentWaypoint.position) < distanceThreshold)
-            {
-                currentWaypoint = waypointList.GetNextWaypoint(currentWaypoint);
-            }
-            RotateTowardsWaypoint();
+            currentWaypoint = waypointList.GetNextWaypoint(currentWaypoint);
         }
     }
 
@@ -42,22 +38,5 @@ public class WaypointMover : MonoBehaviour
         directionToWaypoint = (currentWaypoint.position - transform.position).normalized;
         targetRotation = Quaternion.LookRotation(directionToWaypoint);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            isMoving = true;
-            //Debug.Log("Player Entered");
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            isMoving = false;
-            transform.position = startPosition;
-            //Debug.Log("Player Exited");
-        }
     }
 }
