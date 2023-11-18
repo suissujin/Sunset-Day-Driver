@@ -8,6 +8,9 @@ TagManager:
   - Obstacle
   - Ground
   - Road
+  - LapLine
+  - LC1
+  - LC2
   layers:
   - Default
   - TransparentFX

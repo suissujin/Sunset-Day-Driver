@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +12,7 @@ public class PlayerCarController : MonoBehaviour
     public DriftCheck driftCheck;
     public PauseMenuScript pauseMenu;
     public WaypointList waypointList;
+    public LapCounter lapCounter;
 
     public Vector3 velocity;
     public Transform carModel;
@@ -20,9 +22,10 @@ public class PlayerCarController : MonoBehaviour
 
     public BoxCollider carCollider;
     public LayerMask collisionMask;
-    public LayerMask roadMask;
+    public LayerMask groundMask;
     public AnimationCurve collisionCurve;
     public float collisionDistance;
+    private float raylength = 1f;
 
     private float accelerationInput;
     private float brakeInput;
@@ -31,10 +34,12 @@ public class PlayerCarController : MonoBehaviour
     private float backingUpInput;
     public int carType;
     public int quitCounter = 0;
+    public float carSpeed;
 
 
     public bool isDrifting = false;
     public bool onRoad;
+    public bool resetting;
 
     private CarController inputActions;
     [SerializeField]
@@ -59,7 +64,7 @@ public class PlayerCarController : MonoBehaviour
         inputActions.CarControlls.SwitchCar3.performed += ctx => carType = 3;
         inputActions.CarControlls.SwitchCar4.performed += ctx => carType = 4;
         inputActions.CarControlls.Pause.performed += ctx => pauseMenu.Pause();
-        inputActions.CarControlls.ResetCar.performed += ctx => ResetCar();
+        inputActions.CarControlls.ResetCar.performed += ctx => resetting = true;
         inputActions.CarControlls.QuitGame.performed += ctx => quitCounter = 1;
     }
 
@@ -70,6 +75,7 @@ public class PlayerCarController : MonoBehaviour
         {
             if (pauseMenu.gamePaused == true)
             {
+                Gamepad.current?.SetMotorSpeeds(0, 0);
                 if (quitCounter == 1)
                 {
                     Application.Quit();
@@ -151,7 +157,6 @@ public class PlayerCarController : MonoBehaviour
 
         if (brakeInput > 0.6f || isDrifting)
         {
-            //Gamepad.current.SetMotorSpeeds(0.123f, 0.234f);
             tireMarks.SetActive(true);
         }
         else
@@ -165,38 +170,42 @@ public class PlayerCarController : MonoBehaviour
         }
 
         CheckRoad();
+        if (resetting)
+        {
+            resetting = false;
+            if (!onRoad)
+            {
+                ResetCar();
+            }
+        }
 
     }
     void Accelerate(float amount)
     {
-        var smoothedAcceleration = carTuning.accelerationCurve.Evaluate(velocity.magnitude / carTuning.maxSpeed) * amount;
-        if (onRoad)
+        float maxSpeed = onRoad ? carTuning.maxSpeed : 20f;
+        var smoothedAcceleration = carTuning.accelerationCurve.Evaluate(velocity.magnitude / maxSpeed) * amount;
+
+        if (isDrifting)
         {
-            velocity.z += smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
-            if (isDrifting)
-            {
-                velocity.z += smoothedAcceleration * carTuning.acceleration * 0.8f * Time.deltaTime;
-            }
+            velocity.z += smoothedAcceleration * carTuning.acceleration * 0.8f * Time.deltaTime;
         }
         else
         {
-            velocity.z += smoothedAcceleration * carTuning.maxSpeed * 0.25f * Time.deltaTime;
+            velocity.z += smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
         }
     }
     void AccelerateBack(float amount)
     {
-        var smoothedAcceleration = carTuning.accelerationCurve.Evaluate(velocity.magnitude / carTuning.maxSpeed) * amount;
-        if (onRoad)
+        float maxSpeed = onRoad ? carTuning.maxSpeed : 20f;
+        var smoothedAcceleration = carTuning.accelerationCurve.Evaluate(velocity.magnitude / maxSpeed) * amount;
+
+        if (isDrifting)
         {
-            velocity.z -= smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
-            if (isDrifting)
-            {
-                velocity.z -= smoothedAcceleration * carTuning.acceleration * 0.8f * Time.deltaTime;
-            }
+            velocity.z -= smoothedAcceleration * carTuning.acceleration * 0.8f * Time.deltaTime;
         }
         else
         {
-            velocity.z -= smoothedAcceleration * carTuning.maxSpeed * 0.25f * Time.deltaTime;
+            velocity.z -= smoothedAcceleration * carTuning.acceleration * Time.deltaTime;
         }
     }
     void CheckCollision()
@@ -215,19 +224,17 @@ public class PlayerCarController : MonoBehaviour
     }
     void CheckRoad()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, 1f, roadMask))
+        if (Physics.Raycast(transform.position, Vector3.down, raylength, groundMask))
         {
             onRoad = true;
-            Debug.Log("On Road");
+            //Debug.Log("On Road");
+            Gamepad.current?.SetMotorSpeeds(0f, 0f);
         }
         else
         {
             onRoad = false;
-            if (velocity.z > carTuning.maxSpeed * 0.1f)
-            {
-                velocity.z = carTuning.maxSpeed * 0.1f;
-            }
-            Debug.Log("Off Road");
+            //Debug.Log("Off Road");
+            Gamepad.current?.SetMotorSpeeds(0.05f, 0.05f);
         }
     }
 
@@ -235,6 +242,7 @@ public class PlayerCarController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(carBody.transform.position, carCollider.size);
+        Gizmos.DrawRay(transform.position, Vector3.down * raylength);
     }
 
     void AirResistance()
@@ -258,10 +266,18 @@ public class PlayerCarController : MonoBehaviour
                 velocity.z -= amount * carTuning.brakeStrength * Time.deltaTime;
             }
         }
-        else
+        else if (velocity.z < -1)
         {
-            velocity.z = 0;
+            if (isDrifting && brakeInput > 0.6f)
+            {
+                velocity.z += carTuning.tireGrip * Time.deltaTime;
+            }
+            else
+            {
+                velocity.z += amount * carTuning.brakeStrength * Time.deltaTime;
+            }
         }
+        else { velocity.z = 0; }
     }
     void FrontSteering(ref float steeringAmount)
     {
@@ -271,11 +287,11 @@ public class PlayerCarController : MonoBehaviour
         steeringAmount += frontSteerInput * carTuning.steeringCurveFront.Evaluate(velocity.magnitude / carTuning.maxSpeed) * carTuning.leftStickWeight * carTuning.gripCurve.Evaluate(carTuning.tireGrip);
         //Debug.Log("FrontSteering: " + frontSteerInput * steeringCurveFront.Evaluate(velocity.magnitude / maxSpeed));    
     }
+
     //mache dass bim brämse grip 100% isch
     //^^^^^^^
     //goht immer nonig!!!!
-    //vibration bim drivte
-    //fov bim schnell fahre witter mache
+
     void RearSteering(ref float steeringAmount)
     {
         var targetAngle = carTuning.maxModelAngle * rearSteerInput;

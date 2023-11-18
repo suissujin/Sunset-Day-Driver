@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -13,13 +14,12 @@ public class PauseMenuScript : MonoBehaviour
             Time.timeScale = 1;
             gamePaused = false;
             carController.quitCounter = 0;
-            Debug.Log("Game Unpaused");
         }
         else
         {
             Time.timeScale = 0;
             gamePaused = true;
-            Debug.Log("Game Paused");
+            Gamepad.current.SetMotorSpeeds(0, 0);
         }
     }
 }

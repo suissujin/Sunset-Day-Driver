@@ -4,18 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using System;
 
 public class DriftScoreCounter : MonoBehaviour
 {
     public DriftCheck driftCheck;
     public PauseMenuScript pauseMenu;
+    public LapCounter lapCounter;
+
     public GameObject gamePlayUI;
     public GameObject pauseMenuUI;
+
     public PlayerCarController playerCarController;
+
     public TextMeshProUGUI StyleScoreText;
     public TextMeshProUGUI Speedometer;
     public TextMeshProUGUI driftScoreText;
     public TextMeshProUGUI grazeScoreText;
+    public TextMeshProUGUI lapTimeText;
+    public TextMeshProUGUI bestLapTimeText;
     private void Awake()
     {
         gamePlayUI.SetActive(true);
@@ -28,13 +35,15 @@ public class DriftScoreCounter : MonoBehaviour
         {
             gamePlayUI.SetActive(true);
             pauseMenuUI.SetActive(false);
-            StyleScoreText.text = "Style Points: " + driftCheck.totalScore.ToString();
+            StyleScoreText.text = string.Format("<mspace=1em>{0}</mspace>", driftCheck.totalScore.ToString());
             Speedometer.text = Mathf.Round(playerCarController.velocity.z).ToString() + " km/h";
+            lapTimeText.text = FormatTime(lapCounter.lapTime);
+            bestLapTimeText.text = FormatTime(lapCounter.bestLapTime);
 
             if (driftCheck.driftScore > 0)
             {
                 driftScoreText.gameObject.SetActive(true);
-                driftScoreText.text = "Drifting for: " + driftCheck.driftScore.ToString();
+                driftScoreText.text = string.Format("<mspace=1em>{0}</mspace>", driftCheck.driftScore.ToString());
             }
             else
             {
@@ -43,7 +52,7 @@ public class DriftScoreCounter : MonoBehaviour
             if (driftCheck.grazeScore > 0)
             {
                 grazeScoreText.gameObject.SetActive(true);
-                grazeScoreText.text = "Grazeing for: " + driftCheck.grazeScore.ToString();
+                grazeScoreText.text = string.Format("<mspace=1em>{0}</mspace>", driftCheck.grazeScore.ToString());
             }
             else
             {
@@ -57,5 +66,13 @@ public class DriftScoreCounter : MonoBehaviour
 
         }
 
+    }
+    private String FormatTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        int milliseconds = Mathf.FloorToInt(time * 100 % 100);
+
+        return string.Format("<mspace=1em>{0:00}:{1:00}:{2:00}</mspace>", minutes, seconds, milliseconds);
     }
 }

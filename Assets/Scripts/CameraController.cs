@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -59,5 +60,9 @@ public class CameraController : MonoBehaviour
         //transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
         transform.position = targetPosition;
         transform.LookAt(playerCarController.transform.position + playerCarController.transform.forward * 10f);
+
+        var targetFoV = 60 + playerCarController.velocity.magnitude * 0.5f;
+        Camera.main.fieldOfView = Mathf.Clamp(targetFoV, 60, 100);
+        //Debug.Log(Camera.main.fieldOfView);
     }
 }
