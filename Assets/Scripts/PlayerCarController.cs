@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.Rendering.Universal;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerCarController : MonoBehaviour
 {
@@ -35,6 +37,7 @@ public class PlayerCarController : MonoBehaviour
     public int carType;
     public int quitCounter = 0;
     public float carSpeed;
+    private int currentCarType;
 
 
     public bool isDrifting = false;
@@ -66,69 +69,23 @@ public class PlayerCarController : MonoBehaviour
         inputActions.CarControlls.Pause.performed += ctx => pauseMenu.Pause();
         inputActions.CarControlls.ResetCar.performed += ctx => resetting = true;
         inputActions.CarControlls.QuitGame.performed += ctx => quitCounter = 1;
+
+        SelectCar(OnStartScript.instance.carIndex);
+        pauseMenu.gamePaused = false;
     }
 
     private void Update()
     {
-
-        var ChildHolder = gameObject.transform.GetChild(0).gameObject.transform;
+        if (pauseMenu.gamePaused == true)
         {
-            if (pauseMenu.gamePaused == true)
+            Gamepad.current?.SetMotorSpeeds(0, 0);
+            if (quitCounter == 1)
             {
-                Gamepad.current?.SetMotorSpeeds(0, 0);
-                if (quitCounter == 1)
-                {
-                    Application.Quit();
-                }
-                switch (carType)
-                {
-                    case 1:
-                        ChildHolder.GetChild(0).gameObject.SetActive(true);
-                        ChildHolder.GetChild(1).gameObject.SetActive(false);
-                        ChildHolder.GetChild(2).gameObject.SetActive(false);
-                        ChildHolder.GetChild(3).gameObject.SetActive(false);
-                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 1");
-                        Debug.Log(carTuning.carName);
-                        break;
-
-                    case 2:
-                        ChildHolder.GetChild(0).gameObject.SetActive(false);
-                        ChildHolder.GetChild(1).gameObject.SetActive(true);
-                        ChildHolder.GetChild(2).gameObject.SetActive(false);
-                        ChildHolder.GetChild(3).gameObject.SetActive(false);
-                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 2");
-                        Debug.Log(carTuning.carName);
-                        break;
-
-                    case 3:
-                        ChildHolder.GetChild(0).gameObject.SetActive(false);
-                        ChildHolder.GetChild(1).gameObject.SetActive(false);
-                        ChildHolder.GetChild(2).gameObject.SetActive(true);
-                        ChildHolder.GetChild(3).gameObject.SetActive(false);
-                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 3");
-                        Debug.Log(carTuning.carName);
-                        break;
-
-                    case 4:
-                        ChildHolder.GetChild(0).gameObject.SetActive(false);
-                        ChildHolder.GetChild(1).gameObject.SetActive(false);
-                        ChildHolder.GetChild(2).gameObject.SetActive(false);
-                        ChildHolder.GetChild(3).gameObject.SetActive(true);
-                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 4");
-                        Debug.Log(carTuning.carName);
-                        break;
-
-                    default:
-                        ChildHolder.GetChild(0).gameObject.SetActive(true);
-                        ChildHolder.GetChild(1).gameObject.SetActive(false);
-                        ChildHolder.GetChild(2).gameObject.SetActive(false);
-                        ChildHolder.GetChild(3).gameObject.SetActive(false);
-                        carTuning = Resources.Load<CarTuning>("CarTunings/Auti 1");
-                        Debug.Log(carTuning.carName);
-                        break;
-                }
+                SceneManager.LoadScene(0);
             }
+            SelectCar(carType);
         }
+        else { carType = currentCarType; }
     }
 
     void FixedUpdate()
@@ -179,6 +136,62 @@ public class PlayerCarController : MonoBehaviour
             }
         }
 
+    }
+    void SelectCar(int carType)
+    {
+        Transform ChildHolder = gameObject.transform.GetChild(0).gameObject.transform;
+        switch (carType)
+        {
+            case 1:
+                ChildHolder.GetChild(0).gameObject.SetActive(true);
+                ChildHolder.GetChild(1).gameObject.SetActive(false);
+                ChildHolder.GetChild(2).gameObject.SetActive(false);
+                ChildHolder.GetChild(3).gameObject.SetActive(false);
+                carTuning = Resources.Load<CarTuning>("CarTunings/Auti 1");
+                currentCarType = 1;
+                Debug.Log(carTuning.carName);
+                break;
+
+            case 2:
+                ChildHolder.GetChild(0).gameObject.SetActive(false);
+                ChildHolder.GetChild(1).gameObject.SetActive(true);
+                ChildHolder.GetChild(2).gameObject.SetActive(false);
+                ChildHolder.GetChild(3).gameObject.SetActive(false);
+                carTuning = Resources.Load<CarTuning>("CarTunings/Auti 2");
+                currentCarType = 2;
+                Debug.Log(carTuning.carName);
+                break;
+
+            case 3:
+                ChildHolder.GetChild(0).gameObject.SetActive(false);
+                ChildHolder.GetChild(1).gameObject.SetActive(false);
+                ChildHolder.GetChild(2).gameObject.SetActive(true);
+                ChildHolder.GetChild(3).gameObject.SetActive(false);
+                carTuning = Resources.Load<CarTuning>("CarTunings/Auti 3");
+                currentCarType = 3;
+                Debug.Log(carTuning.carName);
+                break;
+
+            case 4:
+                ChildHolder.GetChild(0).gameObject.SetActive(false);
+                ChildHolder.GetChild(1).gameObject.SetActive(false);
+                ChildHolder.GetChild(2).gameObject.SetActive(false);
+                ChildHolder.GetChild(3).gameObject.SetActive(true);
+                carTuning = Resources.Load<CarTuning>("CarTunings/Auti 4");
+                currentCarType = 4;
+                Debug.Log(carTuning.carName);
+                break;
+
+            default:
+                ChildHolder.GetChild(0).gameObject.SetActive(true);
+                ChildHolder.GetChild(1).gameObject.SetActive(false);
+                ChildHolder.GetChild(2).gameObject.SetActive(false);
+                ChildHolder.GetChild(3).gameObject.SetActive(false);
+                carTuning = Resources.Load<CarTuning>("CarTunings/Auti 1");
+                currentCarType = 1;
+                Debug.Log(carTuning.carName);
+                break;
+        }
     }
     void Accelerate(float amount)
     {

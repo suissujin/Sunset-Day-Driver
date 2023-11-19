@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PixelEffect : MonoBehaviour
 {
     [SerializeField] private Material material;
     [SerializeField] private float pixelation;
 
-    // Start is called before the first frame update
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         float height = Screen.height;
