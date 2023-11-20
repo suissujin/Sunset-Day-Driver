@@ -52,21 +52,21 @@ public class LapCounter : MonoBehaviour
                 driftCheck.totalScore = 0;
                 lapCounted = false;
             }
-            else if (lapTime > bestLapTime && driftCheck.totalScore > highScore)
+            if (lapTime > bestLapTime && driftCheck.totalScore > highScore)
             {
                 lapTime = 0;
                 highScore = driftCheck.totalScore;
                 driftCheck.totalScore = 0;
                 lapCounted = false;
             }
-            else if (lapTime < bestLapTime && driftCheck.totalScore < highScore)
+            if (lapTime < bestLapTime && driftCheck.totalScore < highScore)
             {
                 bestLapTime = lapTime;
                 lapTime = 0;
                 driftCheck.totalScore = 0;
                 lapCounted = false;
             }
-            else if (lapTime > bestLapTime && driftCheck.totalScore < highScore)
+            if (lapTime > bestLapTime && driftCheck.totalScore < highScore)
             {
                 lapTime = 0;
                 driftCheck.totalScore = 0;
