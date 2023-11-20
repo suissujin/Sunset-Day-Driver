@@ -70,7 +70,11 @@ public class PlayerCarController : MonoBehaviour
         inputActions.CarControlls.ResetCar.performed += ctx => resetting = true;
         inputActions.CarControlls.QuitGame.performed += ctx => quitCounter = 1;
 
-        SelectCar(OnStartScript.instance.carIndex);
+        if (OnStartScript.instance.carIndex == 0)
+        {
+            OnStartScript.instance.carIndex = 1;
+        }
+        else { SelectCar(OnStartScript.instance.carIndex); }
         pauseMenu.gamePaused = false;
     }
 

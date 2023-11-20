@@ -42,23 +42,36 @@ public class LapCounter : MonoBehaviour
 
     void TimeCount()
     {
-        if (lapCounted && bestLapTime == 0)
+        if (lapCounted)
         {
-            bestLapTime = lapTime;
-        }
-        else if (lapCounted == true && lapTime < bestLapTime && driftCheck.totalScore > highScore)
-        {
-            bestLapTime = lapTime;
-            highScore = driftCheck.totalScore;
-            lapTime = 0;
-            driftCheck.totalScore = 0;
-            lapCounted = false;
-        }
-        else if (lapCounted == true && lapTime > bestLapTime && driftCheck.totalScore < highScore)
-        {
-            lapTime = 0;
-            driftCheck.totalScore = 0;
-            lapCounted = false;
+            if (lapTime < bestLapTime && driftCheck.totalScore > highScore)
+            {
+                bestLapTime = lapTime;
+                highScore = driftCheck.totalScore;
+                lapTime = 0;
+                driftCheck.totalScore = 0;
+                lapCounted = false;
+            }
+            else if (lapTime > bestLapTime && driftCheck.totalScore > highScore)
+            {
+                lapTime = 0;
+                highScore = driftCheck.totalScore;
+                driftCheck.totalScore = 0;
+                lapCounted = false;
+            }
+            else if (lapTime < bestLapTime && driftCheck.totalScore < highScore)
+            {
+                bestLapTime = lapTime;
+                lapTime = 0;
+                driftCheck.totalScore = 0;
+                lapCounted = false;
+            }
+            else if (lapTime > bestLapTime && driftCheck.totalScore < highScore)
+            {
+                lapTime = 0;
+                driftCheck.totalScore = 0;
+                lapCounted = false;
+            }
         }
     }
 }

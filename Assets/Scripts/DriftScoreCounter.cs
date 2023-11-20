@@ -24,6 +24,12 @@ public class DriftScoreCounter : MonoBehaviour
     public TextMeshProUGUI lapTimeText;
     public TextMeshProUGUI bestLapTimeText;
     public TextMeshProUGUI highScoreText;
+
+    public RectTransform speedometerNeedle;
+
+    public float minAngle;
+    public float maxAngle;
+    private float maxSpeedDial = 260;
     private void Awake()
     {
         gamePlayUI.SetActive(true);
@@ -38,9 +44,11 @@ public class DriftScoreCounter : MonoBehaviour
             pauseMenuUI.SetActive(false);
             StyleScoreText.text = string.Format("<mspace=1em>{0}</mspace>", driftCheck.totalScore.ToString());
             highScoreText.text = string.Format("<mspace=1em>{0}</mspace>", lapCounter.highScore.ToString());
-            Speedometer.text = Mathf.Round(playerCarController.velocity.z).ToString() + " km/h";
+            Speedometer.text = string.Format("<mspace=1em>{0}</mspace>", Mathf.Round(playerCarController.velocity.z).ToString() + " km/h");
             lapTimeText.text = FormatTime(lapCounter.lapTime);
             bestLapTimeText.text = FormatTime(lapCounter.bestLapTime);
+
+            speedometerNeedle.localEulerAngles = new Vector3(0, 0, Mathf.Lerp(minAngle, maxAngle, playerCarController.velocity.z / maxSpeedDial));
 
             if (driftCheck.driftScore > 0)
             {
