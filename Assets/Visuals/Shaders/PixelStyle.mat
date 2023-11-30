@@ -38,8 +38,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _Scale: 200
-    - _ScaleX: 384
-    - _ScaleY: 216
+    - _ScaleX: 1920
+    - _ScaleY: 1080
     - _Scale_1: 119.5
     m_Colors: []
   m_BuildTextureStacks: []
