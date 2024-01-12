@@ -6,10 +6,10 @@ public class LightCheck : MonoBehaviour
 {
     [SerializeField] private GameObject lightObject;
     // Start is called before the first frame update
-    void Start()
-    {
-        lightObject.SetActive(false);
-    }
+    // void Start()
+    // {
+    //     lightObject.SetActive(false);
+    // }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
