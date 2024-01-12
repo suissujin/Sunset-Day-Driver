@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Auti 2
   m_EditorClassIdentifier: 
   carName: Lastwagen
-  maxModelAngle: 30
+  maxModelAngle: 5
   rotationChangeSpeed: 50
+  rotationSnapbackSpeed: 100
   maxSpeed: 120
   acceleration: 80
   brakeStrength: 80
@@ -27,8 +28,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.00111912
-      value: 0.20664914
+      time: 0.013631327
+      value: 0.13603146
       inSlope: 4.085581
       outSlope: 4.085581
       tangentMode: 0
@@ -36,8 +37,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.39189234
     - serializedVersion: 3
-      time: 0.11195198
-      value: 0.54270184
+      time: 0.12862983
+      value: 0.4838487
       inSlope: 1.7126725
       outSlope: 1.7126725
       tangentMode: 0

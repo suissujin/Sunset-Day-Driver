@@ -10,6 +10,8 @@ public class LapCounter : MonoBehaviour
     public bool crossedLC2 = false;
     public bool crossedLL = false;
     public bool lapCounted = false;
+    public bool timeCounted = false;
+    public bool scoreCounted = false;
 
     public float lapTime = 0;
     public float bestLapTime = 0;
@@ -20,6 +22,7 @@ public class LapCounter : MonoBehaviour
         lapTime += Time.deltaTime;
         LapCheck();
         TimeCount();
+        ScoreCount();
     }
     void LapCheck()
     {
@@ -38,40 +41,44 @@ public class LapCounter : MonoBehaviour
             crossedLC2 = false;
             crossedLL = false;
         }
+        if (timeCounted && scoreCounted)
+        {
+            lapCounted = false;
+            timeCounted = false;
+            scoreCounted = false;
+        }
     }
 
     void TimeCount()
     {
         if (lapCounted)
         {
-            if (lapTime < bestLapTime && driftCheck.totalScore > highScore)
+            if (bestLapTime == 0)
             {
                 bestLapTime = lapTime;
-                highScore = driftCheck.totalScore;
-                lapTime = 0;
-                driftCheck.totalScore = 0;
-                lapCounted = false;
             }
-            if (lapTime > bestLapTime && driftCheck.totalScore > highScore)
-            {
-                lapTime = 0;
-                highScore = driftCheck.totalScore;
-                driftCheck.totalScore = 0;
-                lapCounted = false;
-            }
-            if (lapTime < bestLapTime && driftCheck.totalScore < highScore)
+            else if (lapTime < bestLapTime)
             {
                 bestLapTime = lapTime;
-                lapTime = 0;
-                driftCheck.totalScore = 0;
-                lapCounted = false;
             }
-            if (lapTime > bestLapTime && driftCheck.totalScore < highScore)
+            lapTime = 0;
+            timeCounted = true;
+        }
+    }
+    void ScoreCount()
+    {
+        if (lapCounted)
+        {
+            if (highScore == 0)
             {
-                lapTime = 0;
-                driftCheck.totalScore = 0;
-                lapCounted = false;
+                highScore = driftCheck.totalScore;
             }
+            else if (driftCheck.totalScore > highScore)
+            {
+                highScore = driftCheck.totalScore;
+            }
+            driftCheck.totalScore = 0;
+            scoreCounted = true;
         }
     }
 }

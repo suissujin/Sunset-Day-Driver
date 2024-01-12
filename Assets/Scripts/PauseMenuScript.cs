@@ -19,7 +19,7 @@ public class PauseMenuScript : MonoBehaviour
         {
             Time.timeScale = 0;
             gamePaused = true;
-            Gamepad.current.SetMotorSpeeds(0, 0);
+            Gamepad.current?.SetMotorSpeeds(0, 0);
         }
     }
 }

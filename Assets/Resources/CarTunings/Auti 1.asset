@@ -15,6 +15,7 @@ MonoBehaviour:
   carName: Trueno
   maxModelAngle: 60
   rotationChangeSpeed: 400
+  rotationSnapbackSpeed: 400
   maxSpeed: 150
   acceleration: 150
   brakeStrength: 60

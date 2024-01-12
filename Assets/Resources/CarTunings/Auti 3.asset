@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Auti 3
   m_EditorClassIdentifier: 
   carName: Fiat 500
-  maxModelAngle: 60
+  maxModelAngle: 20
   rotationChangeSpeed: 100
-  maxSpeed: 80
+  rotationSnapbackSpeed: 100
+  maxSpeed: 90
   acceleration: 25
   brakeStrength: 50
   tireGrip: 20
@@ -27,8 +28,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.026003968
-      value: 0.10031818
+      time: 0.02183069
+      value: 0.27295613
       inSlope: 1.2655742
       outSlope: 1.2655742
       tangentMode: 0
@@ -36,8 +37,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.37232286
     - serializedVersion: 3
-      time: 0.24099776
-      value: 0.5677999
+      time: 0.20346877
+      value: 0.5403341
       inSlope: 1.3736823
       outSlope: 1.3736823
       tangentMode: 0
@@ -54,8 +55,8 @@ MonoBehaviour:
       inWeight: 0.20698279
       outWeight: 0.33890554
     - serializedVersion: 3
-      time: 0.95364434
-      value: 0.83447814
+      time: 0.9744957
+      value: 0.85017365
       inSlope: -0.3040646
       outSlope: -0.3040646
       tangentMode: 0

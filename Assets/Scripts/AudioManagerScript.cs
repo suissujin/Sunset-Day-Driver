@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
 
 public class AudioManagerScript : MonoBehaviour
 {
     public static AudioManagerScript instance;
-    public AudioSource musicSource;
-    public AudioSource sfxSource;
+    public float cityValue;
+    public bool isMuted = false;
 
     private void Awake()
     {
@@ -18,26 +20,9 @@ public class AudioManagerScript : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(instance);
-        PlayMusic();
     }
-    public void PlayMusic()
+    public void MuteAudio()
     {
-        musicSource.Play();
-    }
-    public void ToggleMuteMusic()
-    {
-        musicSource.mute = !musicSource.mute;
-    }
-    public void PlaySFX(AudioClip clip)
-    {
-        sfxSource.PlayOneShot(clip);
-    }
-    public void StopSFX()
-    {
-        sfxSource.Stop();
-    }
-    public void ToggleMuteSFX()
-    {
-        sfxSource.mute = !sfxSource.mute;
+        isMuted = !isMuted;
     }
 }

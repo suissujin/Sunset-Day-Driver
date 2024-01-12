@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 public class DriftCheck : MonoBehaviour
 {
     public PlayerCarController playerCarController;
     public LapCounter lapCounter;
+    public EmitterScript emitterScript;
 
     public Collider carBody;
 
@@ -15,6 +17,8 @@ public class DriftCheck : MonoBehaviour
     public int totalScore;
     public bool isGrazing = false;
     public bool crashed = false;
+    public bool inCity = false;
+
 
     private void Update()
     {
@@ -39,6 +43,11 @@ public class DriftCheck : MonoBehaviour
                 driftScore = 0;
             }
         }
+        if (inCity)
+        {
+            emitterScript.ApplyCityAmbient();
+        }
+        else { emitterScript.SubtractCityAmbient(); }
     }
 
     void OnTriggerEnter(Collider other)
@@ -47,6 +56,10 @@ public class DriftCheck : MonoBehaviour
         {
             isGrazing = true;
             //Debug.Log("Bim Lastwage");
+        }
+        if (other.gameObject.CompareTag("City"))
+        {
+            inCity = true;
         }
         if (other.gameObject.CompareTag("LC1"))
         {
@@ -71,6 +84,10 @@ public class DriftCheck : MonoBehaviour
         {
             isGrazing = false;
             //Debug.Log("Weg vom Lastwage");
+        }
+        if (other.gameObject.CompareTag("City"))
+        {
+            inCity = false;
         }
         if (other.gameObject.CompareTag("LapLine"))
         {

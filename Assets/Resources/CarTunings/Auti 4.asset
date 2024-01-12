@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Auti 4
   m_EditorClassIdentifier: 
   carName: Ferrari
-  maxModelAngle: 60
+  maxModelAngle: 10
   rotationChangeSpeed: 100
+  rotationSnapbackSpeed: 100
   maxSpeed: 250
   acceleration: 150
   brakeStrength: 150
   tireGrip: 20
-  gripStrength: 20
+  gripStrength: 50
   airResistance: 0.7
   leftStickWeight: 1
   rightStickWeight: 0.1
@@ -144,10 +145,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0332489
+      time: 0.020736694
       value: 0.0107421875
-      inSlope: 1.0232807
-      outSlope: 1.0232807
+      inSlope: 1.0102061
+      outSlope: 1.0102061
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -155,8 +156,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1.0232807
-      outSlope: 1.0232807
+      inSlope: 1.0102061
+      outSlope: 1.0102061
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -168,19 +169,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.38419762
+      time: 0.029720694
       value: 0.023723543
-      inSlope: 0.0756334
-      outSlope: 0.0756334
+      inSlope: 0.03228797
+      outSlope: 0.03228797
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.1934036
-      value: 0.084926546
-      inSlope: 0.0756334
-      outSlope: 0.0756334
+      time: 0.97725224
+      value: 0.054317415
+      inSlope: 0.03228797
+      outSlope: 0.03228797
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

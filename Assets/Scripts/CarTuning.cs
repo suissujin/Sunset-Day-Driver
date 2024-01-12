@@ -9,6 +9,7 @@ public class CarTuning : ScriptableObject
     public string carName;
     public float maxModelAngle;
     public float rotationChangeSpeed;
+    public float rotationSnapbackSpeed;
     public float maxSpeed;
     public float acceleration;
     public float brakeStrength;

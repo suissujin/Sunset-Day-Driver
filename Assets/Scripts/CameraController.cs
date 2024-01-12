@@ -20,25 +20,22 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
-        if (pauseMenu.gamePaused == true)
+        switch (playerCarController.carType)
         {
-            switch (playerCarController.carType)
-            {
-                case 1:
-                    offset.y = 2.2f;
-                    break;
-                case 2:
-                    offset.y = 4.2f;
-                    break;
-                case 3:
-                    offset.y = 2.2f;
-                    break;
-                case 4:
-                    angle = 2.5f;
-                    break;
-                default:
-                    break;
-            }
+            case 1:
+                offset.y = 2.2f;
+                break;
+            case 2:
+                offset.y = 4.2f;
+                break;
+            case 3:
+                offset.y = 2.2f;
+                break;
+            case 4:
+                offset.y = 2.5f;
+                break;
+            default:
+                break;
         }
     }
     private void LateUpdate()

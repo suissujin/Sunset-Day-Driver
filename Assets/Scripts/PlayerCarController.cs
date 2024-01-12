@@ -1,9 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Rendering.Universal;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -38,11 +33,12 @@ public class PlayerCarController : MonoBehaviour
     public int quitCounter = 0;
     public float carSpeed;
     private int currentCarType;
-
+    public float bumperCheckSize = 0.1f;
 
     public bool isDrifting = false;
     public bool onRoad;
     public bool resetting;
+    private bool _isCrashed;
 
     private CarController inputActions;
     [SerializeField]
@@ -70,14 +66,21 @@ public class PlayerCarController : MonoBehaviour
         inputActions.CarControlls.ResetCar.performed += ctx => resetting = true;
         inputActions.CarControlls.QuitGame.performed += ctx => quitCounter = 1;
 
-        if (OnStartScript.instance.carIndex == 0)
+        if (OnStartScript.instance == null)
         {
-            OnStartScript.instance.carIndex = 1;
+            SelectCar(1);
         }
         else { SelectCar(OnStartScript.instance.carIndex); }
-        pauseMenu.gamePaused = false;
+        if (Time.timeScale == 0)
+        {
+            pauseMenu.gamePaused = false;
+            Time.timeScale = 1;
+        }
     }
-
+    private void Start()
+    {
+        Cursor.visible = false;
+    }
     private void Update()
     {
         if (pauseMenu.gamePaused == true)
@@ -89,12 +92,11 @@ public class PlayerCarController : MonoBehaviour
             }
             SelectCar(carType);
         }
-        else { carType = currentCarType; }
+        else { carType = currentCarType; quitCounter = 0; }
     }
 
     void FixedUpdate()
     {
-        //Debug.Log("Brakeing for: " + brakeInput);
         if (brakeInput > 0)
         {
             Brake(brakeInput);
@@ -227,16 +229,34 @@ public class PlayerCarController : MonoBehaviour
     }
     void CheckCollision()
     {
-        var worldVelocity = transform.TransformDirection(velocity);
-        if (Physics.BoxCast(carBody.transform.position, carCollider.size * 0.5f, worldVelocity.normalized, out var hit, carModel.localRotation, collisionDistance, collisionMask))
+        if (velocity.z <= 0f && backingUpInput != 0)
         {
+            if (Physics.OverlapBox(carBody.transform.position + carCollider.size.z * 0.5f * carBody.transform.forward, Vector3.one * bumperCheckSize * 0.5f, carModel.rotation, collisionMask).Length > 0)
+            {
+                _isCrashed = true;
+                driftCheck.crashed = true;
+                if (carBody.enabled)
+                {
+                    carBody.enabled = false;
+                }
+                return;
+            }
+        }
+        if (!carBody.enabled)
+        {
+            carBody.enabled = true;
+        }
+        var worldVelocity = transform.TransformDirection(velocity);
+        if (Physics.BoxCast(carBody.transform.position, carCollider.size * 0.5f, worldVelocity.normalized, out var hit, carModel.rotation, collisionDistance, collisionMask))
+        {
+
             var dot = Math.Abs(Vector3.Dot(hit.normal, worldVelocity.normalized));
             velocity *= collisionCurve.Evaluate(dot);
-            Debug.Log("Collision: " + hit.distance);
             driftCheck.crashed = true;
-
+            _isCrashed = true;
         }
-        // else { driftCheck.crashed = false; }
+
+        else { _isCrashed = false; driftCheck.crashed = false; }
     }
     void CheckRoad()
     {
@@ -256,8 +276,10 @@ public class PlayerCarController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        var matrix = Matrix4x4.TRS(carBody.transform.position, carModel.rotation, carBody.transform.lossyScale);
+        Gizmos.matrix = matrix;
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(carBody.transform.position, carCollider.size);
+        Gizmos.DrawWireCube(Vector3.zero, carCollider.size);
         Gizmos.DrawRay(transform.position, Vector3.down * raylength);
     }
 
@@ -301,21 +323,17 @@ public class PlayerCarController : MonoBehaviour
         var maxRearTurning = carTuning.steeringCurveRear.Evaluate(1) * carTuning.rightStickWeight;
         var steeringNormalized = steeringAbsolute / maxRearTurning;
         steeringAmount += frontSteerInput * carTuning.steeringCurveFront.Evaluate(velocity.magnitude / carTuning.maxSpeed) * carTuning.leftStickWeight * carTuning.gripCurve.Evaluate(carTuning.tireGrip);
-        //Debug.Log("FrontSteering: " + frontSteerInput * steeringCurveFront.Evaluate(velocity.magnitude / maxSpeed));    
     }
-
-    //mache dass bim brämse grip 100% isch
-    //^^^^^^^
-    //goht immer nonig!!!!
 
     void RearSteering(ref float steeringAmount)
     {
-        var targetAngle = carTuning.maxModelAngle * rearSteerInput;
+        var input = _isCrashed || (accelerationInput <= 0 && brakeInput > 0) ? 0 : rearSteerInput;
+        var targetAngle = carTuning.maxModelAngle * input;
         var targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
         var driftAmount = Mathf.Max(velocity.magnitude / carTuning.maxSpeed, brakeInput);
-        carModel.localRotation = Quaternion.RotateTowards(carModel.localRotation, targetRotation, carTuning.rotationChangeSpeed * Time.deltaTime * carTuning.driftCurve.Evaluate(driftAmount));
-        steeringAmount = rearSteerInput * carTuning.steeringCurveRear.Evaluate(driftAmount) * carTuning.rightStickWeight;
-        //Debug.Log("RearSteering: " + targetAngle);
+        var rotationSpeed = (accelerationInput <= 0 && brakeInput > 0) || _isCrashed ? carTuning.rotationSnapbackSpeed : carTuning.rotationChangeSpeed * carTuning.driftCurve.Evaluate(driftAmount);
+        carModel.localRotation = Quaternion.RotateTowards(carModel.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
+        steeringAmount = input * carTuning.steeringCurveRear.Evaluate(driftAmount) * carTuning.rightStickWeight;
         if (Mathf.Abs(targetAngle) > driftAmount && Mathf.Abs(carModel.localRotation.y) > 0.4 && onRoad)
         {
             isDrifting = true;
@@ -324,7 +342,6 @@ public class PlayerCarController : MonoBehaviour
         {
             isDrifting = false;
         }
-
     }
     void Turn(float steeringAmount)
     {
